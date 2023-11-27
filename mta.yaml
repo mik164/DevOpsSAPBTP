@@ -1,0 +1,94 @@
+_schema-version: '3.2'
+ID: DevOpsSAPBTP
+version: 0.0.1
+
+parameters:
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production
+
+modules:
+
+
+  # --------------------- SERVER MODULE ------------------------
+  - name: DevOpsSAPBTP-srv
+  # ------------------------------------------------------------
+    type: nodejs
+    path: gen/srv
+    build-parameters:
+      ignore:
+        - default-*.json
+        - .env
+        - "*node_modules*"
+        - package-lock.json
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 512M
+      disk-quota: 1024M
+    requires:
+      - name: DevOpsSAPBTP-uaa
+      - name: DevOpsSAPBTP-logging
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+
+
+
+
+  # ------------------ APP ROUTER MODULE -----------------------
+  - name: DevOpsSAPBTP-app
+  # ------------------------------------------------------------
+    type: approuter.nodejs
+    path: app
+    build-parameters:
+      ignore:
+        - default-*.json
+        - .env
+        - "*node_modules*"
+        - package-lock.json
+    parameters:
+      memory: 256M
+      disk-quota: 1024M
+    requires:
+      - name: DevOpsSAPBTP-uaa
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv
+          url: ~{srv-url}
+          timeout: 600000
+          forwardAuthToken: true
+      - name: DevOpsSAPBTP-logging
+
+
+resources:
+  # ----------------------- UAA SERVICE ------------------------
+  - name: DevOpsSAPBTP-uaa
+  # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+
+
+
+
+
+
+
+  # ---------------- APPLICATION LOGGING SERVICE ---------------
+  - name: DevOpsSAPBTP-logging
+  # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite
+
