@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@sap/cds": "^6.8",
-    "@sap/audit-logging": "5.7.1",
 
     "@sap/xsenv": "^3",
     "@sap/xssec": "^3",
