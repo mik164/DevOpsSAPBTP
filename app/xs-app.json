@@ -3,17 +3,17 @@
     "authenticationMethod": "route",
     "routes": [
         {
-            "source": "^/health-check.html$",
-            "service": "html5-apps-report",
-            "target": "html5-apps-report",
-            "authenticationType": "none"
-        },
+            "source": "^/catalog/(.*)$",
+            "authenticationType": "xsuaa",
+            "scope": "$XSAPPNAME.Viewer",
+            "destination": "srv"
+        }
+        ,
         {
             "source": "^/(.*)$",
             "authenticationType": "xsuaa",
-            "localDir": "resources",
-            "service": "html5-apps-report"
+            "scope": "$XSAPPNAME.Viewer",
+            "localDir": "resources"
         }
-
     ]
 }

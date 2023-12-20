@@ -1,0 +1,8 @@
+{
+  "DEVOPSSAPBTP_DB_DUMMY": {
+    "target": {
+      "object": "DUMMY",
+      "schema": "SYS"
+    }
+  }
+}

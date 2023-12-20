@@ -15,7 +15,7 @@ stages:
     cfOrg: "audi-centralservices-qa"
     cfSpace: "DevOps"
     cfAppName: "DevOpsSAPBTP"
-    cfCredentialsId: "github"
+    cfCredentialsId: "deploy-to-cf"
     deployType: "standard"
     npmExecuteEndToEndTests: false
   Compliance:
@@ -26,7 +26,7 @@ stages:
     cfOrg: "audi-centralservices-qa"
     cfSpace: "DevOps"
     cfAppName: "DevOpsSAPBTP"
-    cfCredentialsId: "github"
+    cfCredentialsId: "deploy-to-cf"
     deployType: "standard"
     tmsUpload: false
 steps:
