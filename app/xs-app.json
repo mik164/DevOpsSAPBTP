@@ -3,9 +3,17 @@
     "authenticationMethod": "route",
     "routes": [
         {
+            "source": "^/health-check.html$",
+            "service": "html5-apps-report",
+            "target": "html5-apps-report",
+            "authenticationType": "none"
+        },
+        {
             "source": "^/(.*)$",
             "authenticationType": "xsuaa",
-            "localDir": "resources"
+            "localDir": "resources",
+            "service": "html5-apps-report"
         }
+
     ]
 }
