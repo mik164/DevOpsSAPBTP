@@ -9,19 +9,19 @@
   },
   "dependencies": {
     "@sap/cds": "^6.8",
-
     "@sap/xsenv": "^3",
     "@sap/xssec": "^3",
-    "passport": "^0.4.1",
-
     "cf-nodejs-logging-support": "^6",
     "debug": "^4.3",
-    "express": "^4"
+    "express": "^4",
+    "passport": "^0.4.1"
   },
   "devDependencies": {
+    "mocha": "^10.2.0"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "test": "mocha test/unittest.js"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -60,16 +60,12 @@
         "[development]": {
           "strategy": "mock",
           "users": {
-            "joe": {
-            },
-            "julie": {
-            },
-            "bob": {
-            }
+            "joe": {},
+            "julie": {},
+            "bob": {}
           }
         }
-      }
-      ,
+      },
       "API_SALES_ORDER_SRV": {
         "kind": "odata-v2",
         "model": "srv/external/API_SALES_ORDER_SRV",
